@@ -6,7 +6,7 @@ with open('README.md', 'r') as readme:
 
 setup(
     name='my_pkg_setuptools_binlecode',
-    version='0.1.1',
+    version='0.1.2',
     author='Bin Le',
     author_email='bin.le.code@gmail.com',
     # automatically detect python files
