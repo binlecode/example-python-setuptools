@@ -56,7 +56,7 @@ Alternatively, PyPI supports api token to replace interactive user credentials.
 First, get API token from pypi.org, then assign it to env var `TWINE_USERNAME`.
 
 ```sh
-TWINE_USERNAME=token TWINE_PASSWORD=pypi-AgEIcHlwaS5vcmcCJDY5ZDUxYTIyLWMwOGUtNDFiNS1hNGQwLTNmNmM3NWQzNzFjYgACKlszLCIwMmY5Mjk3Yy0zNDAyLTQ0Y2YtYTc5MS01NDExODc3ZjRjZmUiXQAABiBRFm45cbjqIcfS-Wpna5mDX8HLoHU2pXnEvzInswQANQ python -m twine upload --skip-existing dist/*
+TWINE_USERNAME=token TWINE_PASSWORD=pypi-XXX... python -m twine upload --skip-existing dist/*
 ```
 
 Replace env var setting with $HOME/.pypirc:
