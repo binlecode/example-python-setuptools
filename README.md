@@ -15,9 +15,13 @@ source venv/bin/activate
 python -m pip install --upgrade pip build wheel setuptools twine
 ```
 
-## use build
+Ref: python package:
+https://packaging.python.org/en/latest/tutorials/packaging-projects/
 
-Ref: https://packaging.python.org/en/latest/tutorials/packaging-projects/
+Ref: setuptools guide:
+https://setuptools.pypa.io/en/latest/userguide/index.html
+
+## use build
 
 build with pyproject.toml
 
@@ -52,9 +56,6 @@ TWINE_USERNAME=<TOKEN> python -m twine upload --skip-existing dist/*
 ```
 
 ## use setuptools and setup.py
-
-Ref: setuptools guide:
-https://setuptools.pypa.io/en/latest/userguide/index.html
 
 `python setup sdist` generates source distribution:
 
