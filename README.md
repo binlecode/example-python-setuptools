@@ -69,7 +69,7 @@ Replace env var setting with $HOME/.pypirc:
 
 ## use setuptools and setup.py
 
-`python setup sdist` generates source distribution:
+`python setup.py sdist` generates source distribution:
 
 - dist folder that contains `<package-name>-<version>.tar.gz`
 - <package-name>.egg-info folder
@@ -113,7 +113,7 @@ python setup.py sdist bdist_wheel
 upload package to PyPI (First, register PyPI account if not yet.):
 
 ```sh
-twine upload dist/*
+python -m twine upload --skip-existing dist/*
 ```
 
 ## install
