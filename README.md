@@ -4,26 +4,30 @@ This example repo:
 
 - uses build, setuptools and pyproject.toml to build package
 - uses setup.py to build package
-- uses twine to upload package
+- uses twine to upload package to PyPI package index
 - uses pip or setup.py to install package
+
+PyPI package url: https://pypi.org/project/my-pkg-binlecode/
 
 ```sh
 pyenv shell 3.9.7
 python -m venv venv
 source venv/bin/activate
-
 python -m pip install --upgrade pip build wheel setuptools twine
 ```
 
-Ref: python package:
+Ref: python package doc:
 https://packaging.python.org/en/latest/tutorials/packaging-projects/
 
-Ref: setuptools guide:
+Ref: setuptools doc:
 https://setuptools.pypa.io/en/latest/userguide/index.html
 
 ## use native build
 
-build with pyproject.toml
+Build with `pyproject.toml`, with setuptools as backend.
+
+This build and upload flow is implemented in git action [pull-request
+flow](.github/workflows/pull-request.yml):
 
 ```sh
 rm -rf build dist *.egg-info
@@ -69,7 +73,20 @@ Replace env var setting with $HOME/.pypirc:
 
 ## use setuptools and setup.py
 
-`python setup.py sdist` generates source distribution:
+Use setup.py script to build. Distribution types should be specified.
+
+This is implemented as git action
+[publish workflow](.github/workflows/publish.yml).
+
+#### build sdist
+
+Build source distribution:
+
+```sh
+python setup.py sdist
+```
+
+This generates source distribution:
 
 - dist folder that contains `<package-name>-<version>.tar.gz`
 - <package-name>.egg-info folder
@@ -84,7 +101,7 @@ Source distributions also contain a bundle of metadata sitting in a directory
 called `<package-name>.egg-info`. Egg distribution format is being replaced
 by wheel distribution format.
 
-## bdist and bdist_wheel
+#### build bdist and bdist_wheel
 
 `bdist` means build distribution, which is not necessarily binary.
 
@@ -110,13 +127,13 @@ rm -rf build dist *.egg-info
 python setup.py sdist bdist_wheel
 ```
 
-upload package to PyPI (First, register PyPI account if not yet.):
+Upload package to PyPI (First, register PyPI account if not yet.):
 
 ```sh
 python -m twine upload --skip-existing dist/*
 ```
 
-## install
+## install package
 
 `pip install <package-name>` is a general way of installing package.
 pip always prefers wheel distribution over source distribution.
@@ -126,19 +143,20 @@ will be used to build package at client side.
 To install from local, for example, the package project folder,
 `pip install .` installs the package from current folder.
 
-Local install is handy for development mode, where -e/--editable flag is 
+Local install is handy for development mode, where -e/--editable flag is
 enabled to instruct python to track change in target package project folder:
 `pip install --editable .`.
 
-pip install on wheel skips setup.py execution, if wheel is not available, 
+pip install on wheel skips setup.py execution, if wheel is not available,
 pip has to:
+
 - download the source distribution and extract it
 - run `python setup.py install` on the extracted folder to build and install
 
 Inside package folder, use --editable flag for development mode:
 `python setup.py install --editable .`.
 
-## pyproject.toml
+## about pyproject.toml
 
 A later [PEP517](https://www.python.org/dev/peps/pep-0517/) standard defines
 `pyproject.toml` as the new standard for packaging and distributing python
