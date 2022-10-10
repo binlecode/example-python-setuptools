@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "my_pkg_binlecode"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   { name="Bin Le", email="bin.le.code@gmail.com" },
 ]
@@ -23,5 +23,4 @@ dev = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/pypa/sampleproject"
-"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+"Homepage" = "https://github.com/binlecode/example-python-setuptools"
