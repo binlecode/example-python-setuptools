@@ -1,3 +1,4 @@
+import re
 from setuptools import find_packages, setup
 
 with open('README.md', 'r') as readme:
@@ -5,7 +6,7 @@ with open('README.md', 'r') as readme:
 
 setup(
     name='my_pkg_setuptools_binlecode',
-    version='0.0.2',
+    version='0.1.1',
     author='Bin Le',
     author_email='bin.le.code@gmail.com',
     # automatically detect python files
