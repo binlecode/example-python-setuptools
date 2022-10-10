@@ -21,7 +21,7 @@ https://packaging.python.org/en/latest/tutorials/packaging-projects/
 Ref: setuptools guide:
 https://setuptools.pypa.io/en/latest/userguide/index.html
 
-## use build
+## use native build
 
 build with pyproject.toml
 
@@ -30,7 +30,11 @@ rm -rf build dist *.egg-info
 python -m build
 ```
 
-upload to package index PyPI (First, register PyPI account if not yet.):
+## upload to PyPI
+
+First, register PyPI account if not yet.
+
+Upload to package index PyPI using twine:
 
 ```sh
 # optional: --skip-existing
@@ -48,11 +52,19 @@ View at:
 https://pypi.org/project/my-pkg-binlecode/0.0.3/
 ```
 
-Alternatively, can use api token to replace interactive user credentials input.
+Alternatively, PyPI supports api token to replace interactive user credentials.
 First, get API token from pypi.org, then assign it to env var `TWINE_USERNAME`.
 
 ```sh
-TWINE_USERNAME=<TOKEN> python -m twine upload --skip-existing dist/*
+TWINE_USERNAME=token TWINE_PASSWORD=pypi-AgEIcHlwaS5vcmcCJDY5ZDUxYTIyLWMwOGUtNDFiNS1hNGQwLTNmNmM3NWQzNzFjYgACKlszLCIwMmY5Mjk3Yy0zNDAyLTQ0Y2YtYTc5MS01NDExODc3ZjRjZmUiXQAABiBRFm45cbjqIcfS-Wpna5mDX8HLoHU2pXnEvzInswQANQ python -m twine upload --skip-existing dist/*
+```
+
+Replace env var setting with $HOME/.pypirc:
+
+```
+[pypi]
+  username = __token__
+  password = pypi-XXX...
 ```
 
 ## use setuptools and setup.py
@@ -90,8 +102,8 @@ by wheel distribution format.
 A wheel file is essentially a zip archive with metadata of supported python
 versions and platforms.
 
-Usually both source and wheel build distributions should be generated and
-uploaded to package index for download and install.
+Usually only source and wheel distributions should be generated and
+uploaded to package index (PyPI) for download and install.
 
 ```sh
 rm -rf build dist *.egg-info
@@ -111,14 +123,20 @@ pip always prefers wheel distribution over source distribution.
 If wheel distribution is available for the target platform, source distribution
 will be used to build package at client side.
 
-pip install on wheel skips setup.py execution, which is described below.
+To install from local, for example, the package project folder,
+`pip install .` installs the package from current folder.
 
-Inside package folder, use
-`python setup.py install` to install the distribution package.
+Local install is handy for development mode, where -e/--editable flag is 
+enabled to instruct python to track change in target package project folder:
+`pip install --editable .`.
 
-A inline editable install is for development mode:
-`python setup.py install --editable .` will install with the source content
-that is editable, which is great for debuging and testing changes.
+pip install on wheel skips setup.py execution, if wheel is not available, 
+pip has to:
+- download the source distribution and extract it
+- run `python setup.py install` on the extracted folder to build and install
+
+Inside package folder, use --editable flag for development mode:
+`python setup.py install --editable .`.
 
 ## pyproject.toml
 
