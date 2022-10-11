@@ -101,16 +101,7 @@ Source distributions also contain a bundle of metadata sitting in a directory
 called `<package-name>.egg-info`. Egg distribution format is being replaced
 by wheel distribution format.
 
-#### build bdist and bdist_wheel
-
-`bdist` means build distribution, which is not necessarily binary.
-
-`python setup.py bdist` generates:
-
-- dist/<package-name>-<version>.<platform>.tar.gz, which is the default
-  type of built distribution for the current platform
-- build/bdist.<platform>
-- build/lib folder that includes modules
+#### build bdist_wheel
 
 `python setup.py bdist_wheel` generates:
 
@@ -119,7 +110,7 @@ by wheel distribution format.
 A wheel file is essentially a zip archive with metadata of supported python
 versions and platforms.
 
-Usually only source and wheel distributions should be generated and
+Usually both source and wheel distributions should be generated and
 uploaded to package index (PyPI) for download and install.
 
 ```sh
@@ -164,3 +155,30 @@ modules.
 
 If there's no `pyproject.toml` available, setuptools will fall back to
 `setup.py` file.
+
+## pytest
+
+There are two test folders, one is inside package folder, the other 
+is stand-alone at project root.
+
+To invoke pytest on in package tests, run pytest with package name, pytest 
+will resolve test modules and testing functions.
+
+Running pytest with `pytest ..` instead of `python -m pytest ..` yields nearly 
+equivalent behaviour, except that the latter will add the current directory to 
+`sys.path`, which is standard python behavior.
+
+```sh
+python -m pytest my_pkg
+# or
+pytest my_pkg
+```
+
+To invoke pytest on the root level tests folder, make sure `__init__.py`
+file is in the folder to make it a package:
+
+```sh
+python -m pytest tests
+# or
+pytest tests
+```
