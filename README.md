@@ -1,7 +1,7 @@
-# build a python package
+# example python package development cycle
 
 This example repo:
-
+- uses pytest and tox to automate tests
 - uses build, setuptools and pyproject.toml to build package
 - uses setup.py to build package
 - uses twine to upload package to PyPI package index
