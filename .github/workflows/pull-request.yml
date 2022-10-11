@@ -1,4 +1,4 @@
-name: build and publish package on pull request
+name: test package on pull request
 
 on:
   pull_request:
